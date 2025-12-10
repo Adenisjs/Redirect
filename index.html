@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redirecting...</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+        }
+
+        .container {
+            text-align: center;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .countdown {
+            font-size: 120px;
+            font-weight: bold;
+            margin: 30px 0;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            animation: pulse 1s ease-in-out;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        h1 {
+            font-size: 32px;
+            margin-bottom: 20px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .redirect-text {
+            font-size: 18px;
+            margin-top: 20px;
+            opacity: 0.9;
+        }
+
+        .loader {
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(255,255,255,0.3);
+            border-top: 5px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 30px auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        footer {
+            width: 100%;
+            background: rgba(0,0,0,0.2);
+            padding: 20px;
+            text-align: center;
+            font-size: 14px;
+            backdrop-filter: blur(10px);
+        }
+
+        .footer-info {
+            margin: 5px 0;
+        }
+
+        .visitor-count {
+            font-weight: bold;
+            color: #ffd700;
+        }
+
+        .domain {
+            color: #a0d8ff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Redirecting...</h1>
+        <div class="countdown" id="countdown">3</div>
+        <div class="loader"></div>
+        <div class="redirect-text">You will be redirected to slavhack2recoded.com</div>
+    </div>
+
+    <footer>
+        <div class="footer-info">
+            <span class="visitor-count">Visitors: <span id="visitorCount">0</span></span>
+        </div>
+        <div class="footer-info">
+            <span class="domain">Current Domain: <span id="currentDomain">Loading...</span></span>
+        </div>
+    </footer>
+
+    <script>
+        // Visitor counter using in-memory storage
+        let visitorCount = parseInt(sessionStorage.getItem('visitorCount') || '0');
+        visitorCount++;
+        sessionStorage.setItem('visitorCount', visitorCount.toString());
+        document.getElementById('visitorCount').textContent = visitorCount;
+
+        // Display current domain
+        document.getElementById('currentDomain').textContent = window.location.hostname || 'localhost';
+
+        // Countdown logic
+        let count = 3;
+        const countdownEl = document.getElementById('countdown');
+
+        const countdownInterval = setInterval(() => {
+            count--;
+            if (count > 0) {
+                countdownEl.textContent = count;
+                countdownEl.style.animation = 'none';
+                setTimeout(() => {
+                    countdownEl.style.animation = 'pulse 1s ease-in-out';
+                }, 10);
+            } else {
+                clearInterval(countdownInterval);
+                window.location.href = 'https://slavhack2recoded.com';
+            }
+        }, 1000);
+    </script>
+</body>
+</html>
